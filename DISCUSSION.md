@@ -2,7 +2,7 @@
 ## 🚨 Critical Bugs & Anti-Patterns (Priority - 1)
 ### Frontend Issues
 - [x] **Bug Accessibility violation** - Missing `<tr>` wrapper in table headers
-- [x] **Search Functionality Broken** - yearsOfExperience bug and add phone numbers
+- [x] **Search Functionality Broken** - yearsOfExperience bug and add phone numbers, Fixed specialties search
 
 - [x] **Direct DOM Manipulation** - Replace `document.getElementById().innerHTML` with React state
 
@@ -27,15 +27,15 @@
 
 ### User Experience
 
-- [ ] **Poor Visual Design** - Basic styling, no modern UI components
+- [x] **Poor Visual Design** - Basic styling, no modern UI components
 
-- [ ] **No Responsive Design** - Table breaks on mobile devices
+- [x] **No Responsive Design** - Table breaks on mobile devices
 
-- [ ] **No Empty States** - No feedback when no results found
+- [x] **No Empty States** - No feedback when no results found
 
 - [x] **No Loading Indicators** - Users don't know when data is loading
 
 
 ## ⚡ Performance Issues (Priority 3)
-- [ ] **No Debouncing** - Search triggers on every keystroke, causing excessive re-renders
+- [x] **No Debouncing** - Search triggers on every keystroke, causing excessive re-renders
 - [x] **No Loading States** - Users don't know when data is being fetched

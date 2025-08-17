@@ -1,14 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Advocate, AdvocatesResponse } from "@/types/advocate";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
+import { useDebounce } from "@/hooks/use-debounce";
+import { AdvocateSearch, AdvocateTable } from "@/components/shared/advocate";
 
 export default function Home(): JSX.Element {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
+  
+  // Debounce search input to prevent excessive filtering
+  const debouncedSearch = useDebounce(search, 300);
 
   useEffect(() => {
     const fetchAdvocates = async () => {
@@ -26,100 +33,62 @@ export default function Home(): JSX.Element {
         setAdvocates(jsonResponse.data);
       } catch (err) {
         console.error("Error fetching advocates:", err);
-        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+        setError(errorMessage);
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
       } finally {
         setLoading(false);
       }
     };
 
     fetchAdvocates();
-  }, []);
+  }, [toast]);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value;
-    setSearch(searchTerm);
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
   };
-  const filteredAdvocates: Advocate[] = useMemo(() => {
-    if (!search || search.length === 0 || search === "") return advocates;
-    return advocates.filter((advocate) => {
-      return (
-        advocate.firstName.toLowerCase().includes(search.toLowerCase()) ||
-        advocate.lastName.toLowerCase().includes(search.toLowerCase()) ||
-        advocate.city.toLowerCase().includes(search.toLowerCase()) ||
-        advocate.degree.toLowerCase().includes(search.toLowerCase()) ||
-        advocate.specialties.includes(search) ||
-        String(advocate.yearsOfExperience).includes(search) ||
-        String(advocate.phoneNumber).includes(search)
-      );
-    });
-  }, [advocates, search])
-  
-  
 
-  const onResetSearch = (): void => {
+  const handleResetSearch = () => {
     setSearch("");
-    if (searchInputRef.current) {
-      searchInputRef.current.value = "";
-    }
   };
 
   return (
-    <main style={{ margin: "24px" }}>
-      <h1>Solace Advocates</h1>
-      <br />
-      <br />
-      <div>
-        <p>Search</p>
-        <p>
-          Searching for: <span>{search}</span>
-        </p>
-        <input 
-          ref={searchInputRef}
-          style={{ border: "1px solid black" }} 
-          onChange={onChange} 
+    <main className="container mx-auto p-6 max-w-7xl">
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Solace Advocates</h1>
+          <p className="text-muted-foreground">Search and filter through our network of advocates</p>
+        </div>
+
+        <AdvocateSearch
+          search={search}
+          onSearchChange={handleSearchChange}
+          onReset={handleResetSearch}
+          debouncedSearch={debouncedSearch}
         />
-        <button onClick={onResetSearch}>Reset Search</button>
+
+        {loading && (
+          <div className="space-y-3">
+            <Skeleton className="h-4 w-[600px]" />
+            <Skeleton className="h-4 w-[200px]" />
+            <Skeleton className="h-4 w-[300px]" />
+          </div>
+        )}
+
+        {error && (
+          <div className="rounded-md bg-destructive/15 p-4">
+            <p className="text-sm text-destructive">Error: {error}</p>
+          </div>
+        )}
+
+        {!loading && !error && (
+          <AdvocateTable advocates={advocates} searchTerm={debouncedSearch} />
+        )}
       </div>
-      <br />
-      <br />
-      
-      {loading && <p>Loading advocates...</p>}
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      
-      {!loading && !error && (
-        <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>City</th>
-            <th>Degree</th>
-            <th>Specialties</th>
-            <th>Years of Experience</th>
-            <th>Phone Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAdvocates.map((advocate, index) => {
-            return (
-              <tr key={`${advocate.firstName}-${advocate.lastName}-${index}`}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
-                  {advocate.specialties.map((s, specialtyIndex) => (
-                    <div key={specialtyIndex}>{s}</div>
-                  ))}
-                </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      )}
     </main>
   );
 }
