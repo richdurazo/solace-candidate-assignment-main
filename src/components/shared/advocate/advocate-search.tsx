@@ -35,7 +35,8 @@ export function AdvocateSearch({ search, onSearchChange, onReset, debouncedSearc
           onChange={(e) => onSearchChange(e.target.value)}
           className="max-w-sm"
         />
-        <Button onClick={handleReset} variant="outline">
+        <Button onClick={handleReset} variant="outline" className='bg-secondary' 
+        style={{ background: 'linear-gradient(45deg,#deb260,#d39009)' }}>
           Reset Search
         </Button>
       </div>

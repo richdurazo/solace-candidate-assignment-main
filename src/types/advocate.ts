@@ -6,7 +6,6 @@ export interface Advocate {
     degree: string
     specialties: string[]
     yearsOfExperience: number
-    location: string
   }
 
 export interface AdvocatesResponse {

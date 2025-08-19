@@ -16,7 +16,7 @@ export function AdvocateTable({ advocates, searchTerm }: AdvocateTableProps) {
         advocate.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         advocate.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
         advocate.degree.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        advocate.specialties.some(specialty => 
+        advocate.specialties?.some(specialty => 
           specialty.toLowerCase().includes(searchTerm.toLowerCase())
         ) ||
         String(advocate.yearsOfExperience).includes(searchTerm) ||
@@ -55,7 +55,7 @@ export function AdvocateTable({ advocates, searchTerm }: AdvocateTableProps) {
                 <TableCell>{advocate.degree}</TableCell>
                 <TableCell>
                   <div className="flex flex-wrap gap-1">
-                    {advocate.specialties.map((specialty, specialtyIndex) => {
+                    {advocate.specialties?.map((specialty, specialtyIndex) => {
                       const isMatch = searchTerm && 
                         specialty.toLowerCase().includes(searchTerm.toLowerCase());
                       return (

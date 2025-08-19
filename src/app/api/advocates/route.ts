@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import db from "../../../db";
+import { db } from "../../../db";
 import { advocates } from "../../../db/schema";
 import { AdvocatesResponse } from "../../../types/api";
 
