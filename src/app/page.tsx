@@ -5,7 +5,8 @@ import { Advocate, AdvocatesResponse } from "@/types/advocate";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useDebounce } from "@/hooks/use-debounce";
-import { AdvocateSearch, AdvocateTable } from "@/components/shared/advocate";
+import { AdvocateSearch, AdvocateTable } from "@/components/advocate";
+import { Logo } from '@/components/brand/Logo';
 
 export default function Home(): JSX.Element {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
@@ -57,10 +58,14 @@ export default function Home(): JSX.Element {
   };
 
   return (
-    <main className="container mx-auto p-6 max-w-7xl">
+    <main className="container mx-auto p-6 max-w-8xl">
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Solace Advocates</h1>
+          <div className="flex items-center">
+            <Logo className="h-7 w-auto" />
+            <div className="text-2xl tracking-tight text-gold">Advocates</div>
+          </div>
+          
           <p className="text-muted-foreground">Search and filter through our network of advocates</p>
         </div>
 

@@ -35,12 +35,12 @@ export function AdvocateSearch({ search, onSearchChange, onReset, debouncedSearc
           onChange={(e) => onSearchChange(e.target.value)}
           className="max-w-sm"
         />
-        <Button onClick={handleReset} variant="outline" className='bg-secondary' 
-        style={{ background: 'linear-gradient(45deg,#deb260,#d39009)' }}>
+
+        <Button onClick={handleReset} className="btn-gold">
           Reset Search
         </Button>
       </div>
-      
+
       {search && (
         <p className="text-sm text-muted-foreground">
           Searching for: <span className="font-medium">{search}</span>
@@ -50,5 +50,6 @@ export function AdvocateSearch({ search, onSearchChange, onReset, debouncedSearc
         </p>
       )}
     </div>
+
   );
 }

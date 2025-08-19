@@ -1,4 +1,30 @@
 # Solace Engineering Assignment - Discussion & Improvements
+
+**Repository:** [GitHub Repo Link](https://github.com/richdurazo/solace-candidate-assignment-main)
+
+## 🚀 If I Had More Time 
+### (depending on the project requirements) some performance improvements i'd consider adding:
+
+### Testing 
+- **Unit Tests** - If I had more time i'd add unit tests. Perhaps 80-90% code coverage depending on requirements 
+
+### Frontend Enhancements
+- **Pagination** - Implement server-side pagination to handle large datasets efficiently
+- **Virtual Scrolling** - For tables with hundreds of thousands of advocates, implement virtual scrolling to only render visible rows
+- **Advanced Filtering** - Add filters by city, degree, experience range, and specialties, other table features depending on requirements and users needs
+- **Sorting** - Add column sorting with visual indicators
+- **Export Functionality** - Allow users to export filtered results to CSV/PDF (if needed)
+- **Responsive Design** - Improve mobile experience with collapsible columns and touch-friendly interactions, I started trying to implement a bit of Solaces design but didn't want to take to long given the time constraint 
+- **Oranization** - I focused more on functionality and getting a quick apealing UI up, So if i had more time i'd have a more organized project structure. 
+
+
+### Backend Performance Optimizations - (depending on requirements and users experience needs)
+- **Database Indexing** - Add indexes on frequently searched columns (firstName, lastName, city, specialties)
+- **Full-Text Search** - Implement PostgreSQL full-text search for better search performance across large datasets
+- **Caching Layer** - Add caching for frequently accessed data and search results
+- **Query Optimization** - Implement query pagination, limit result sets, and optimize JOIN operations
+- **Search Analytics** - Track popular searches to optimize database queries and caching strategies
+
 ## 🚨 Critical Bugs & Anti-Patterns (Priority - 1)
 ### Frontend Issues
 - [x] **Bug Accessibility violation** - Missing `<tr>` wrapper in table headers
@@ -14,7 +40,6 @@
 - [x] **Database Integration** - Implemented PostgreSQL database with Docker
 - [x] **Performance Monitoring** - Added response time tracking and logging
 - [x] **Database Scripts** - Fixed missing seed script and migration setup issues
-
 
 ### 🔒 Security Issues
 
